@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Laxmi Tution Centre – Where Knowledge Blossoms</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --gold: #C9960C;
+    --gold-light: #E8B84B;
+    --gold-pale: #F5D98A;
+    --cream: #FBF6EC;
+    --cream-dark: #F2E8D0;
+    --brown: #3D2B0E;
+    --brown-mid: #6B4C1E;
+    --brown-soft: #9A7040;
+    --white: #FFFDF7;
+    --text: #2C1A06;
+    --text-soft: #6B4C1E;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 999; opacity: 0.4;
+  }
+
+  /* ── ORNAMENT ── */
+  .ornament {
+    display: flex; align-items: center; gap: 12px;
+    color: var(--gold); font-size: 1.1rem; justify-content: center;
+  }
+  .ornament::before, .ornament::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+    max-width: 80px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(251,246,236,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,150,12,0.2);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 24px rgba(61,43,14,0.12); }
+
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo-circle {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    color: var(--white); font-weight: 700; font-size: 1rem;
+    box-shadow: 0 2px 12px rgba(201,150,12,0.35);
+    flex-shrink: 0;
+  }
+  .nav-brand-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--brown); line-height: 1.2;
+  }
+  .nav-brand-text span { font-size: 0.7rem; font-weight: 400; color: var(--brown-soft); font-family: 'DM Sans', sans-serif; display: block; }
+
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none; font-size: 0.88rem; font-weight: 500;
+    color: var(--brown-mid); letter-spacing: 0.03em;
+    position: relative; padding-bottom: 3px;
+    transition: color 0.2s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 100%;
+    height: 1.5px; background: var(--gold);
+    transition: right 0.25s ease;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { right: 0; }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--white) !important;
+    padding: 9px 22px; border-radius: 50px;
+    font-weight: 500 !important;
+    box-shadow: 0 3px 14px rgba(201,150,12,0.3);
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,150,12,0.4) !important; }
+  .nav-cta::after { display: none !important; }
+
+  .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--brown); border-radius: 2px; transition: 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 100px 5% 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-decor {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .hero-bg-decor .circle1 {
+    position: absolute; top: -120px; right: -100px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,184,75,0.18) 0%, transparent 70%);
+  }
+  .hero-bg-decor .circle2 {
+    position: absolute; bottom: -80px; left: -60px;
+    width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,150,12,0.1) 0%, transparent 70%);
+  }
+  .hero-bg-decor .line1 {
+    position: absolute; top: 30%; right: 10%;
+    width: 1px; height: 200px;
+    background: linear-gradient(180deg, transparent, var(--gold-pale), transparent);
+    opacity: 0.6;
+  }
+  .hero-bg-decor .dots {
+    position: absolute; top: 15%; left: 5%;
+    display: grid; grid-template-columns: repeat(6,1fr); gap: 14px;
+    opacity: 0.25;
+  }
+  .hero-bg-decor .dots span {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--gold);
+    display: block;
+  }
+
+  .hero-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center; width: 100%;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,150,12,0.1);
+    border: 1px solid rgba(201,150,12,0.3);
+    padding: 6px 16px; border-radius: 50px;
+    font-size: 0.78rem; font-weight: 500;
+    color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 20px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge::before { content: '✦'; font-size: 0.6rem; }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 4.5vw, 4rem);
+    line-height: 1.15; font-weight: 700;
+    color: var(--brown);
+    animation: fadeUp 0.8s 0.1s ease both;
+    margin-bottom: 18px;
+  }
+  .hero-title em {
+    font-style: italic; color: var(--gold);
+    display: block;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 400;
+    color: var(--brown-soft); line-height: 1.6;
+    animation: fadeUp 0.8s 0.2s ease both;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  .hero-meta {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    margin-bottom: 36px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-meta-item {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 0.88rem; color: var(--brown-mid);
+  }
+  .hero-meta-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+  .hero-cta-row {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: var(--white); border: none;
+    padding: 14px 32px; border-radius: 50px;
+    font-size: 0.92rem; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    box-shadow: 0 6px 24px rgba(201,150,12,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(201,150,12,0.45); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--brown); border: 1.5px solid rgba(201,150,12,0.5);
+    padding: 13px 28px; border-radius: 50px;
+    font-size: 0.92rem; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { background: rgba(201,150,12,0.08); border-color: var(--gold); }
+
+  /* HERO CARD */
+  .hero-card-wrap {
+    animation: fadeUp 0.9s 0.2s ease both;
+    position: relative;
+  }
+  .hero-card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 36px;
+    box-shadow: 0 20px 60px rgba(61,43,14,0.12), 0 4px 16px rgba(201,150,12,0.1);
+    border: 1px solid rgba(201,150,12,0.15);
+    position: relative; overflow: hidden;
+  }
+  .hero-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  }
+  .hero-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--brown);
+    margin-bottom: 6px; text-align: center;
+  }
+  .hero-card-sub {
+    text-align: center; font-size: 0.82rem; color: var(--brown-soft);
+    margin-bottom: 24px; letter-spacing: 0.04em;
+  }
+
+  .stat-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-box {
+    background: linear-gradient(135deg, var(--cream), var(--cream-dark));
+    border: 1px solid rgba(201,150,12,0.2);
+    border-radius: 14px; padding: 16px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--gold); line-height: 1;
+  }
+  .stat-lbl { font-size: 0.75rem; color: var(--brown-soft); margin-top: 4px; }
+
+  .hero-features-list {
+    list-style: none; display: flex; flex-direction: column; gap: 10px;
+  }
+  .hero-features-list li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.88rem; color: var(--brown-mid);
+  }
+  .hero-features-list li::before {
+    content: '→'; color: var(--gold); font-size: 0.9rem; flex-shrink: 0;
+  }
+
+  .hero-card-float {
+    position: absolute; bottom: -16px; right: -16px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--white); border-radius: 16px; padding: 14px 18px;
+    font-size: 0.78rem; font-weight: 500; text-align: center;
+    box-shadow: 0 8px 24px rgba(201,150,12,0.4);
+    line-height: 1.4;
+  }
+  .hero-card-float strong { font-size: 1.1rem; display: block; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 90px 5%; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-size: 0.75rem; font-weight: 500;
+    color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase;
+    text-align: center; margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 3vw, 2.8rem); font-weight: 700;
+    color: var(--brown); text-align: center; line-height: 1.25;
+    margin-bottom: 14px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; color: var(--brown-soft);
+    text-align: center; max-width: 580px; margin: 0 auto 56px;
+    line-height: 1.7; font-style: italic;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--white); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+  }
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img-box {
+    background: linear-gradient(135deg, var(--cream-dark), var(--cream));
+    border-radius: 24px; aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(201,150,12,0.2);
+    overflow: hidden; position: relative;
+  }
+  .about-img-box-inner {
+    text-align: center; padding: 30px;
+  }
+  .ltc-monogram {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; font-weight: 700;
+    color: var(--gold); opacity: 0.2; line-height: 1;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  .about-lamp {
+    font-size: 5rem; position: relative; z-index: 1;
+    filter: drop-shadow(0 4px 12px rgba(201,150,12,0.3));
+  }
+  .about-img-tag {
+    position: absolute; bottom: -18px; left: 30px;
+    background: var(--white);
+    border: 1px solid rgba(201,150,12,0.2);
+    border-radius: 14px; padding: 12px 18px;
+    box-shadow: 0 8px 24px rgba(61,43,14,0.1);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .about-img-tag .icon { font-size: 1.4rem; }
+  .about-img-tag-text { font-size: 0.8rem; line-height: 1.3; }
+  .about-img-tag-text strong { display: block; color: var(--brown); font-weight: 600; }
+  .about-img-tag-text span { color: var(--brown-soft); }
+
+  .about-content { padding: 20px 0; }
+  .about-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--brown);
+    margin-bottom: 16px; line-height: 1.3;
+  }
+  .about-content h3 em { font-style: italic; color: var(--gold); }
+  .about-content p {
+    color: var(--brown-soft); line-height: 1.8;
+    font-size: 0.95rem; margin-bottom: 20px;
+  }
+  .about-pillars {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 28px;
+  }
+  .pillar {
+    background: var(--cream);
+    border: 1px solid rgba(201,150,12,0.18);
+    border-radius: 14px; padding: 16px;
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .pillar-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .pillar-text strong { display: block; font-size: 0.88rem; color: var(--brown); margin-bottom: 3px; }
+  .pillar-text span { font-size: 0.8rem; color: var(--brown-soft); }
+
+  /* ── SUBJECTS ── */
+  #subjects { background: var(--cream); }
+  .subject-cards {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  .subject-card {
+    background: var(--white);
+    border: 1px solid rgba(201,150,12,0.15);
+    border-radius: 18px; padding: 24px 16px;
+    text-align: center;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    cursor: default;
+  }
+  .subject-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(201,150,12,0.18);
+    border-color: var(--gold-pale);
+  }
+  .subject-icon { font-size: 2.2rem; margin-bottom: 10px; }
+  .subject-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.92rem; font-weight: 600;
+    color: var(--brown); line-height: 1.3;
+  }
+  .subject-note { font-size: 0.75rem; color: var(--brown-soft); margin-top: 5px; }
+
+  /* STD BADGE */
+  .std-row {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    justify-content: center; margin-top: 40px;
+  }
+  .std-badge {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--white); border-radius: 50px;
+    padding: 8px 20px; font-size: 0.85rem; font-weight: 500;
+  }
+
+  /* ── WHY US ── */
+  #why { background: var(--brown); position: relative; overflow: hidden; }
+  #why::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9960C' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  #why .section-eyebrow, #why .section-title, #why .section-desc {
+    color: var(--gold-pale);
+  }
+  #why .section-title { color: var(--white); }
+  #why .section-title em { color: var(--gold-light); }
+  #why .section-desc { color: rgba(251,246,236,0.7); }
+
+  .why-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .why-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,150,12,0.25);
+    border-radius: 20px; padding: 28px;
+    transition: background 0.3s, transform 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .why-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    transition: right 0.4s ease;
+  }
+  .why-card:hover::before { right: 0; }
+  .why-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); }
+
+  .why-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 700;
+    color: rgba(201,150,12,0.2); line-height: 1;
+    margin-bottom: 12px;
+  }
+  .why-icon { font-size: 2rem; margin-bottom: 14px; }
+  .why-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 600;
+    color: var(--white); margin-bottom: 10px;
+  }
+  .why-text { font-size: 0.88rem; color: rgba(251,246,236,0.65); line-height: 1.7; }
+
+  /* ── TIMINGS ── */
+  #timings { background: var(--white); }
+  .timings-wrap {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+  }
+  .timing-card {
+    background: linear-gradient(135deg, var(--cream), var(--cream-dark));
+    border: 1px solid rgba(201,150,12,0.2);
+    border-radius: 24px; padding: 36px;
+    position: relative; overflow: hidden;
+  }
+  .timing-card::after {
+    content: '🕐'; position: absolute; right: 20px; top: 20px;
+    font-size: 4rem; opacity: 0.08;
+  }
+  .timing-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; color: var(--brown); margin-bottom: 20px;
+  }
+  .timing-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0; border-bottom: 1px solid rgba(201,150,12,0.12);
+  }
+  .timing-row:last-of-type { border-bottom: none; }
+  .timing-label { font-size: 0.88rem; color: var(--brown-mid); }
+  .timing-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 600; color: var(--gold);
+  }
+
+  .location-card {
+    background: var(--brown);
+    border-radius: 24px; padding: 36px;
+    color: var(--white);
+    position: relative; overflow: hidden;
+  }
+  .location-card::before {
+    content: '📍'; position: absolute; right: 20px; top: 20px;
+    font-size: 4rem; opacity: 0.08;
+  }
+  .location-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; color: var(--gold-light); margin-bottom: 20px;
+  }
+  .location-detail {
+    display: flex; gap: 12px; margin-bottom: 16px;
+  }
+  .location-detail-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+  .location-detail-text { font-size: 0.9rem; line-height: 1.6; color: rgba(251,246,236,0.8); }
+  .location-detail-text strong { color: var(--white); display: block; margin-bottom: 2px; }
+
+  .contact-btn-row { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-gold-outline {
+    border: 1.5px solid var(--gold-light);
+    color: var(--gold-light);
+    padding: 10px 22px; border-radius: 50px;
+    font-size: 0.85rem; font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-gold-outline:hover { background: rgba(201,150,12,0.15); }
+
+  /* ── ENQUIRY FORM ── */
+  #enquiry { background: var(--cream); }
+  .form-wrap {
+    max-width: 680px; margin: 0 auto;
+    background: var(--white);
+    border-radius: 28px; padding: 48px;
+    box-shadow: 0 20px 60px rgba(61,43,14,0.1);
+    border: 1px solid rgba(201,150,12,0.12);
+    position: relative; overflow: hidden;
+  }
+  .form-wrap::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .form-group { display: flex; flex-direction: column; gap: 7px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label {
+    font-size: 0.82rem; font-weight: 500;
+    color: var(--brown); letter-spacing: 0.03em;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--cream);
+    border: 1.5px solid rgba(201,150,12,0.2);
+    border-radius: 12px; padding: 12px 16px;
+    font-size: 0.9rem; color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,150,12,0.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-group select { cursor: pointer; }
+  .form-submit { margin-top: 28px; text-align: center; }
+  .form-submit button {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--white); border: none;
+    padding: 16px 40px; border-radius: 50px;
+    font-size: 1rem; font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(201,150,12,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .form-submit button:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(201,150,12,0.45); }
+  .form-note { font-size: 0.78rem; color: var(--brown-soft); margin-top: 12px; text-align: center; }
+
+  /* success toast */
+  #toast {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--brown); color: var(--white);
+    padding: 14px 28px; border-radius: 50px;
+    font-size: 0.9rem; font-weight: 500;
+    box-shadow: 0 8px 32px rgba(61,43,14,0.25);
+    z-index: 999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    display: flex; align-items: center; gap: 8px;
+  }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--brown); padding: 56px 5% 28px;
+    position: relative; overflow: hidden;
+  }
+  footer::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px;
+    margin-bottom: 40px;
+  }
+  .footer-brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--white);
+    margin-bottom: 10px;
+  }
+  .footer-brand-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; color: var(--gold-light);
+    font-size: 1rem; margin-bottom: 16px;
+  }
+  .footer-brand-desc { font-size: 0.85rem; color: rgba(251,246,236,0.55); line-height: 1.7; max-width: 280px; }
+  .footer-col-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--gold-light);
+    margin-bottom: 16px; font-weight: 600;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { text-decoration: none; color: rgba(251,246,236,0.55); font-size: 0.85rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-contact-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.85rem; color: rgba(251,246,236,0.6);
+    line-height: 1.5; margin-bottom: 12px;
+  }
+  .footer-contact-icon { flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    border-top: 1px solid rgba(201,150,12,0.15);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 0.78rem; color: rgba(251,246,236,0.4); }
+  .footer-boards {
+    display: flex; gap: 8px;
+  }
+  .board-pill {
+    background: rgba(201,150,12,0.15);
+    border: 1px solid rgba(201,150,12,0.25);
+    color: var(--gold-pale); font-size: 0.72rem;
+    padding: 4px 12px; border-radius: 50px; letter-spacing: 0.04em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .hero-inner, .about-grid, .timings-wrap { grid-template-columns: 1fr; }
+    .hero-card-wrap { order: -1; }
+    .why-grid { grid-template-columns: 1fr 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .footer-inner > :first-child { grid-column: 1 / -1; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+    .about-pillars { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 620px) {
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: absolute; top: 68px; left: 0; right: 0;
+      background: var(--cream); padding: 20px 5%;
+      border-bottom: 1px solid rgba(201,150,12,0.15);
+      gap: 16px;
+    }
+    .hamburger { display: flex; }
+    .why-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    section { padding: 60px 5%; }
+    .form-wrap { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-brand">
+    <div class="nav-logo-circle">LTC</div>
+    <div class="nav-brand-text">
+      Laxmi Tution Centre
+      <span>CBSE & Stateboard · Pondicherry</span>
+    </div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#subjects">Subjects</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#timings">Timings</a></li>
+    <li><a href="#enquiry" class="nav-cta">Enquire Now</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-decor">
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="line1"></div>
+    <div class="dots">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">CBSE &amp; Stateboard · Classes 3rd–12th</div>
+      <h1 class="hero-title">
+        Where Every Child's
+        <em>Knowledge Blossoms</em>
+      </h1>
+      <p class="hero-tagline">
+        Nurturing young minds with personal care, experienced guidance, and the joy of true learning — since Pondicherry.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><div class="dot"></div> Hindi &amp; All Subjects</div>
+        <div class="hero-meta-item"><div class="dot"></div> 5:00 – 8:00 PM Daily</div>
+        <div class="hero-meta-item"><div class="dot"></div> Near Pondy University</div>
+      </div>
+      <div class="hero-cta-row">
+        <a href="#enquiry" class="btn-primary">Enrol Your Child Today</a>
+        <a href="#about" class="btn-secondary">Learn More</a>
+      </div>
+    </div>
+
+    <div class="hero-card-wrap">
+      <div class="hero-card">
+        <div class="hero-card-title">Laxmi Tution Centre</div>
+        <div class="hero-card-sub">✦ Pillayar Kovil Street, Pondicherry ✦</div>
+        <div class="stat-grid">
+          <div class="stat-box">
+            <div class="stat-num">3–12</div>
+            <div class="stat-lbl">Standards Taught</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">3 hrs</div>
+            <div class="stat-lbl">Evening Batch</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">2</div>
+            <div class="stat-lbl">Boards Covered</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">100%</div>
+            <div class="stat-lbl">Individual Care</div>
+          </div>
+        </div>
+        <ul class="hero-features-list">
+          <li>Special basics for slow learners</li>
+          <li>Regular tests &amp; internal exams</li>
+          <li>Experienced, caring faculty</li>
+          <li>Bio, Maths, CS, Accountancy &amp; more</li>
+        </ul>
+      </div>
+      <div class="hero-card-float">
+        <strong>📞 Call Now</strong>98405 84526
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <div class="about-img-box">
+          <div class="ltc-monogram">LTC</div>
+          <div class="about-img-box-inner">
+            <div class="about-lamp">🪔</div>
+          </div>
+        </div>
+        <div class="about-img-tag">
+          <div class="icon">👩‍🏫</div>
+          <div class="about-img-tag-text">
+            <strong>Mrs. Laxmi Ramatchandirane</strong>
+            <span>Founder &amp; Head Tutor</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-content reveal">
+        <div class="section-eyebrow" style="text-align:left;">Our Story</div>
+        <h3>A Centre Built on <em>Care &amp; Commitment</em></h3>
+        <p>
+          At Laxmi Tution Centre, we believe every child deserves patient, personalised attention. Founded by Mrs. Laxmi Ramatchandirane, our centre has been a trusted second home for students across CBSE and Stateboard in Pondicherry.
+        </p>
+        <p>
+          From class 3 right up to class 12, we cover all subjects — with special focus on higher secondary students tackling Biology, Mathematics, Computer Science, and Accountancy.
+        </p>
+        <div class="ornament" style="justify-content:flex-start; margin: 8px 0;">✦</div>
+        <div class="about-pillars">
+          <div class="pillar">
+            <div class="pillar-icon">🌱</div>
+            <div class="pillar-text">
+              <strong>Basics First</strong>
+              <span>Extra attention for slow learners</span>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">📝</div>
+            <div class="pillar-text">
+              <strong>Regular Exams</strong>
+              <span>Consistent test &amp; revision cycle</span>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">⭐</div>
+            <div class="pillar-text">
+              <strong>Quality Teaching</strong>
+              <span>Experienced, dedicated faculty</span>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">💛</div>
+            <div class="pillar-text">
+              <strong>Individual Caring</strong>
+              <span>Every child seen &amp; supported</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECTS -->
+<section id="subjects">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Curriculum</p>
+    <h2 class="section-title reveal">Subjects We <em>Teach</em></h2>
+    <p class="section-desc reveal">Covering all core subjects for both CBSE and Stateboard, with dedicated coaching for higher secondary specialisations.</p>
+
+    <div class="subject-cards reveal">
+      <div class="subject-card">
+        <div class="subject-icon">🔤</div>
+        <div class="subject-name">Hindi</div>
+        <div class="subject-note">All standards</div>
+      </div>
+      <div class="subject-card">
+        <div class="subject-icon">🔢</div>
+        <div class="subject-name">Mathematics</div>
+        <div class="subject-note">3rd – 12th</div>
+      </div>
+      <div class="subject-card">
+        <div class="subject-icon">🔬</div>
+        <div class="subject-name">Science / Biology</div>
+        <div class="subject-note">Higher secondary</div>
+      </div>
+      <div class="subject-card">
+        <div class="subject-icon">💻</div>
+        <div class="subject-name">Computer Science</div>
+        <div class="subject-note">Higher secondary</div>
+      </div>
+      <div class="subject-card">
+        <div class="subject-icon">📊</div>
+        <div class="subject-name">Accountancy</div>
+        <div class="subject-note">Higher secondary</div>
+      </div>
+      <div class="subject-card">
+        <div class="subject-icon">📚</div>
+        <div class="subject-name">All Other Subjects</div>
+        <div class="subject-note">On request</div>
+      </div>
+    </div>
+
+    <div class="std-row reveal">
+      <span class="std-badge">3rd Std</span>
+      <span class="std-badge">4th – 6th Std</span>
+      <span class="std-badge">7th – 9th Std</span>
+      <span class="std-badge">10th Std</span>
+      <span class="std-badge">11th – 12th Std</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Why Choose Us</p>
+    <h2 class="section-title reveal">The <em>LTC Difference</em></h2>
+    <p class="section-desc reveal">We go beyond textbooks — building confidence, habits, and a genuine love for learning in every student.</p>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-num">01</div>
+        <div class="why-icon">🌱</div>
+        <div class="why-title">Basics for Slow Learners</div>
+        <div class="why-text">We never leave a child behind. Our foundation-first approach ensures every student grasps core concepts before moving ahead.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-num">02</div>
+        <div class="why-icon">📝</div>
+        <div class="why-title">Regular Tests &amp; Exams</div>
+        <div class="why-text">Frequent assessments keep students board-exam ready all year round, reducing last-minute exam stress significantly.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-num">03</div>
+        <div class="why-icon">🏆</div>
+        <div class="why-title">High Quality Teaching</div>
+        <div class="why-text">Our experienced faculty follows structured, proven methods to make complex topics easy and enjoyable to understand.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-num">04</div>
+        <div class="why-icon">👩‍🏫</div>
+        <div class="why-title">Experienced Faculties</div>
+        <div class="why-text">Years of classroom experience mean our tutors know exactly where students struggle — and how to help them overcome it.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-num">05</div>
+        <div class="why-icon">💛</div>
+        <div class="why-title">Individual Caring</div>
+        <div class="why-text">Small batches mean every child gets personal attention, with progress tracked and communicated to parents regularly.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-num">06</div>
+        <div class="why-icon">🎯</div>
+        <div class="why-title">Both CBSE &amp; Stateboard</div>
+        <div class="why-text">Specialised guidance aligned with each board's syllabus, marking scheme, and exam pattern for maximum marks.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMINGS & LOCATION -->
+<section id="timings">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Find Us</p>
+    <h2 class="section-title reveal">Timings &amp; <em>Location</em></h2>
+    <p class="section-desc reveal">Conveniently located near Pondicherry University with an evening batch perfect for school students.</p>
+    <div class="timings-wrap">
+      <div class="timing-card reveal">
+        <h3>🕐 Batch Timings</h3>
+        <div class="timing-row">
+          <span class="timing-label">Evening Batch</span>
+          <span class="timing-val">5:00 – 8:00 PM</span>
+        </div>
+        <div class="timing-row">
+          <span class="timing-label">Days</span>
+          <span class="timing-val">Mon – Sat</span>
+        </div>
+        <div class="timing-row">
+          <span class="timing-label">Board</span>
+          <span class="timing-val">CBSE &amp; Stateboard</span>
+        </div>
+        <div class="timing-row">
+          <span class="timing-label">Standards</span>
+          <span class="timing-val">3rd – 12th Std</span>
+        </div>
+        <div style="margin-top:24px;">
+          <a href="#enquiry" class="btn-primary" style="font-size:0.88rem; padding:12px 26px;">Book a Free Counselling</a>
+        </div>
+      </div>
+
+      <div class="location-card reveal">
+        <h3>📍 Our Location</h3>
+        <div class="location-detail">
+          <div class="location-detail-icon">🏠</div>
+          <div class="location-detail-text">
+            <strong>Address</strong>
+            Pillayar Kovil Street, Pillaichavady,<br>
+            Near Pondicherry University,<br>
+            Pondicherry.
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">📞</div>
+          <div class="location-detail-text">
+            <strong>Contact Numbers</strong>
+            98405 84526<br>94433 17352
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">👩‍🏫</div>
+          <div class="location-detail-text">
+            <strong>Head Tutor</strong>
+            Mrs. Laxmi Ramatchandirane
+          </div>
+        </div>
+        <div class="contact-btn-row">
+          <a href="tel:9840584526" class="btn-gold-outline">📞 Call Now</a>
+          <a href="https://wa.me/919840584526" class="btn-gold-outline" target="_blank">💬 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENQUIRY FORM -->
+<section id="enquiry">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Get In Touch</p>
+    <h2 class="section-title reveal">Enquire <em>Today</em></h2>
+    <p class="section-desc reveal">Fill in your details below and we'll get back to you promptly. Let your child's journey to excellence begin!</p>
+    <div class="form-wrap reveal">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Parent / Guardian Name *</label>
+          <input type="text" id="parentName" placeholder="e.g. Mr. Rajesh Kumar" />
+        </div>
+        <div class="form-group">
+          <label>Child's Name *</label>
+          <input type="text" id="childName" placeholder="e.g. Priya Kumar" />
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="phone" placeholder="e.g. 98765 43210" />
+        </div>
+        <div class="form-group">
+          <label>Standard / Class *</label>
+          <select id="standard">
+            <option value="">Select Standard</option>
+            <option>3rd Standard</option>
+            <option>4th Standard</option>
+            <option>5th Standard</option>
+            <option>6th Standard</option>
+            <option>7th Standard</option>
+            <option>8th Standard</option>
+            <option>9th Standard</option>
+            <option>10th Standard</option>
+            <option>11th Standard</option>
+            <option>12th Standard</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Board</label>
+          <select id="board">
+            <option value="">Select Board</option>
+            <option>CBSE</option>
+            <option>Stateboard</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Subject(s) of Interest</label>
+          <input type="text" id="subjects" placeholder="e.g. Maths, Science, Hindi" />
+        </div>
+        <div class="form-group full">
+          <label>Message / Any Questions</label>
+          <textarea id="message" placeholder="Tell us anything you'd like us to know — schedule preferences, doubts, etc."></textarea>
+        </div>
+      </div>
+      <div class="form-submit">
+        <button onclick="submitForm()">✦ Submit Enquiry</button>
+        <p class="form-note">We respect your privacy. Your details will only be used to contact you about admissions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">Laxmi Tution Centre</div>
+      <div class="footer-brand-tag">"Where Every Child's Knowledge Blossoms"</div>
+      <p class="footer-brand-desc">Dedicated to providing quality tuition for CBSE and Stateboard students from class 3 to 12 in Pondicherry, with individual care and experienced guidance.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#subjects">Subjects</a></li>
+        <li><a href="#why">Why Choose Us</a></li>
+        <li><a href="#timings">Timings &amp; Location</a></li>
+        <li><a href="#enquiry">Enquire Now</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact Us</div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">📍</span>
+        <span>Pillayar Kovil Street, Pillaichavady, Near Pondicherry University, Pondicherry.</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">📞</span>
+        <span>98405 84526<br>94433 17352</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">🕐</span>
+        <span>Mon–Sat: 5:00 PM – 8:00 PM</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Laxmi Tution Centre · All rights reserved · Mrs. Laxmi Ramatchandirane</p>
+    <div class="footer-boards">
+      <span class="board-pill">CBSE</span>
+      <span class="board-pill">Stateboard</span>
+      <span class="board-pill">Std 3–12</span>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div id="toast">✅ Enquiry submitted! We'll contact you shortly.</div>
+
+<script>
+  // Scroll nav
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', scrollY > 40);
+  });
+
+  // Hamburger
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  // Close on link click
+  document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  }));
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Form submit
+  function submitForm() {
+    const parent = document.getElementById('parentName').value.trim();
+    const child = document.getElementById('childName').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const std = document.getElementById('standard').value;
+    if (!parent || !child || !phone || !std) {
+      alert('Please fill in all required fields (marked with *).');
+      return;
+    }
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    // Clear form
+    ['parentName','childName','phone','subjects','message'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('standard').value = '';
+    document.getElementById('board').value = '';
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+</script>
+</body>
+</html>
